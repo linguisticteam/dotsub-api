@@ -1,0 +1,67 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td,span { 
+    margin:0;
+    padding:0;
+}
+#header {
+	background-color:#222;
+	color:#fff;
+	font-family: Century Gothic, sans-serif;
+    height: 33px;
+}
+html { height: 100%; }
+body { height: 100%; background-color:#FFF;font-family: Century Gothic, sans-serif; }
+#wrap { min-height: 100%;}
+#main {
+    overflow: auto;
+    padding-bottom: 33px; /* must be same height as the footer */
+
+}
+#footer {
+    position: relative;
+    margin-top: -33px; /* negative value of footer height */
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    background-color:#222;
+    color:#fff;
+}
+
+#content{
+	height: 100%;
+	margin:0 auto;
+	min-height: 100%;
+	height: 100%;
+	width:70%;
+	padding-top:25px;
+	padding-bottom:25px;
+}
+
+#footer a {
+	font-size:80%;
+	color:inherit;
+}
+
+#footer a:hover {
+	color:#CFF;
+}
+
+li {
+	padding-bottom:20px;
+	list-style: circle;
+}
+
+a{
+	padding:0;
+	margin:0;
+	text-decoration:none;
+	color:#000;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+h3{
+	padding-bottom: 25px;
+	text-align: center;
+}
