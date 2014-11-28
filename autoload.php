@@ -6,7 +6,7 @@
  * 
  * @param string $className
  */
-function dotSUB_api_autoload($className){
+function dotsub_api_autoload($className){
 	$classPath = explode('_', $className);
 	if($classPath[0] != 'DotSUB') {
 		return;
@@ -22,4 +22,4 @@ function dotSUB_api_autoload($className){
 	}
 }
 
-spl_autoload_register('dotSUB_api_autoload');
+spl_autoload_register('dotsub_api_autoload');
