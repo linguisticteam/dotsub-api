@@ -54,7 +54,7 @@ class DotSUB_Service_Video extends DotSUB_Service {
 		
 		if($isUpload) {
 			if(!is_readable(str_replace("@", "", $this->file))) {
-				throw new DotSUB_Service_Exception("<h2>A readable file must be given for upload.</h2>");
+				throw new DotSUB_Service_Exception("A readable file must be given for upload.");
 			}
 			if(strpos($this->file, "@") === false) {
 				$this->file = "@" . $this->file;

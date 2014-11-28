@@ -32,7 +32,7 @@ class DotSUB_Service_Media extends DotSUB_Service {
 			// When using an external ID, the request url contains both the
 			// external ID and the username.
 			if($client->getClientUsername() == "") {
-				throw new DotSUB_Service_Exception("<h2>You must give your username as a parameter to DotSUB_Service_Media, the username is part of the request URL for retrieving data using an external id</h2>", "N/A");
+				throw new DotSUB_Service_Exception("Username missing from the configuration. The username is part of the request URL for retrieving data using an external id", "N/A");
 			}
 			$url = self::MEDIA_EXT_ID;
 			$this->usingExtId = true;

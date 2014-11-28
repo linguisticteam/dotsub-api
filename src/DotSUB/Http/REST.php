@@ -52,8 +52,8 @@ class DotSUB_Http_REST {
 				$msg = $decoded['status']['message'];
 			}
 			
-			$err = '<h2>The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-			$err .= " Error Code: ($code)<br/>$msg</h2><br/> $body";
+			$err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
+			$err .= " Error Code: ($code)<br/>$msg<br/> $body";
 			
 			throw new DotSUB_Service_Exception($err, $code);
 		}
@@ -61,8 +61,8 @@ class DotSUB_Http_REST {
 		$decoded = json_decode($body, true);
 		//If dotSUB returns an error in JSON format
 		if(isset($decoded['status']['error']) && $decoded['status']['error'] == "true") {
-			$err = '<h2>The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-			$err .= " Error Code: (" . $decoded['status']['code'] . ")<br/>" . $decoded['status']['message'] . "</h2><br/> $body";
+			$err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
+			$err .= " Error Code: (" . $decoded['status']['code'] . ")<br/>" . $decoded['status']['message'] . "<br/> $body";
 			
 			throw new DotSUB_Service_Exception($err, $code);
 		}
