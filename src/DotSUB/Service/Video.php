@@ -88,4 +88,8 @@ class DotSUB_Service_Video extends DotSUB_Service {
 		}
 		return $ar;
 	}
+	
+	public function setProject($projectId){
+		$this->project = $projectId;
+	}
 }

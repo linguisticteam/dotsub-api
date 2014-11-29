@@ -39,6 +39,10 @@ class DotSUB_Client {
 		$this->hasCredentials = true;
 	}
 
+	public function getClientProject(){
+		return $this->config->getClientProject();
+	}
+	
 	public function setClientProject($project){
 		$this->config->setClientProject($project);
 	}

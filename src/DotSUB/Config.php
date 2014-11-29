@@ -33,7 +33,7 @@ class DotSUB_Config {
 		return $this->config['username'];
 	}
 
-	public function getClientProject($project){
+	public function getClientProject(){
 		return $this->config['project'];
 	}
 
