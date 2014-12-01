@@ -1,27 +1,37 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+
 /**
- * 
+ *
  * Handling the Language part of the dotSUB API.
  * No Authentication required.
- * 
+ *
  * @author Bruno@Linguistic Team International
  */
 class DotSUB_Service_Language extends DotSUB_Service {
-	const LANGUAGE = "https://dotSUB.com/api/language";
-	private $httpRequest;
 
-	public function __construct(DotSUB_Client $client, $language = ""){
-		$this->httpRequest = new DotSUB_Http_Request(self::LANGUAGE, "GET");
+	public function __construct(DotSUB_Client $client){
+
+		self::$SERVICE_URL = "https://dotSUB.com/api/language";
+		parent::__construct($client);
+	
 	}
 
 	public function languageListing(){
+
 		return $this->httpRequest;
+	
 	}
 
 	public function languageMapping($language){
+
 		if(!empty($language)) {
 			$this->httpRequest->setQueryParam("code", $language);
+		} else {
+			throw new DotSUB_Service_Exception("A language must be specified.");
 		}
 		return $this->httpRequest;
+	
 	}
+
 }

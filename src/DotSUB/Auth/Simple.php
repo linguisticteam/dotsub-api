@@ -1,4 +1,5 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
  * The authentication scheme is pretty simple now, but that might change

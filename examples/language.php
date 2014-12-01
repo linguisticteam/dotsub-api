@@ -4,8 +4,6 @@ require_once realpath(dirname(__FILE__) . '/../autoload.php');
 
 
 
-
-
 /**
  * Language Mapping
  *
@@ -18,10 +16,10 @@ require_once realpath(dirname(__FILE__) . '/../autoload.php');
  * send any code to Dotsub and it will reply with the code that should be used
  * to load that language on Dotsub.com
  *
- * @param string $language
- *        	The language code
+ * @param string $language The language code
  */
-function display_one_language($language){
+function display_one_language($language=""){
+
 	$client = new DotSUB_Client();
 	$service = new DotSUB_Service_Language($client);
 	$request = $service->languageMapping($language);
@@ -29,6 +27,7 @@ function display_one_language($language){
 	echo "<pre>";
 	print_r($response);
 	echo "</pre>";
+
 }
 
 /**
@@ -41,15 +40,20 @@ function display_one_language($language){
  * Shows a listing of the languages supported by Dotsub.
  */
 function display_all_languages(){
+
 	$client = new DotSUB_Client();
 	$service = new DotSUB_Service_Language($client);
 	$request = $service->languageListing();
+	
 	$response = $client->execute($request);
-	displayTable(array("Code", "Language"), $response['languages']);
+	displayTable(array(
+		"Code", "Language"
+	), $response['languages']);
+
 }
 
-
 function displayTable($columns, $data){
+
 	if(is_array($columns) && !empty($columns) && !empty($data)) {
 		
 		echo "<table><thead>
@@ -66,4 +70,5 @@ function displayTable($columns, $data){
 		echo "</tbody>
 	  	</table><br/><br/>";
 	}
+
 }

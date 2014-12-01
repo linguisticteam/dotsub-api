@@ -26,8 +26,10 @@
 					<li><a href="language.php">Sample functions to test the Language
 							API (Listing languages, querying languages).</a></li>
 					<li><a href="media.php">Sample functions to test the Media API
-							(metadata requests, upload a video, upload subtitles, change
-							video permissions).</a></li>
+							(metadata requests, upload a video, change video permissions).</a></li>
+					<li><a href="media.php">Sample functions to test the Caption API
+							(caption listing, transcription &amp; translation upload,
+							download & quality level).</a></li>
 
 				</ul>
 			</div>

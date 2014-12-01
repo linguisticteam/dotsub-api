@@ -1,8 +1,9 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
  * Handling an HTTP request with Curl.
- * 
+ *
  * @author Bruno@Linguistic Team International
  */
 class DotSUB_IO_Curl {
@@ -17,10 +18,11 @@ class DotSUB_IO_Curl {
 	 * Fills the HTTP request with the responses it got from executing the
 	 * request.
 	 *
-	 * @param DotSUB_Http_Request $request        	
+	 * @param DotSUB_Http_Request $request
 	 * @return DotSUB_Http_Request
 	 */
 	public function makeRequest(DotSUB_Http_Request $request){
+
 		list($responseData,$responseHeaders,$respHttpCode) = $this->executeRequest($request);
 		
 		if(!isset($responseHeaders['Date']) && !isset($responseHeaders['date'])) {
@@ -32,16 +34,18 @@ class DotSUB_IO_Curl {
 		$request->setResponseBody($responseData);
 		
 		return $request;
+	
 	}
 
 	/**
 	 *
-	 * @param DotSUB_Http_Request $request        	
+	 * @param DotSUB_Http_Request $request
 	 * @throws DotSUB_IO_Exception
 	 * @return multitype:unknown mixed multitype:Ambigous <string, NULL>
 	 *         Ambigous <multitype:string multitype: , multitype:Ambigous <> >
 	 */
 	public function executeRequest(DotSUB_Http_Request $request){
+
 		$curl = curl_init();
 		
 		if($request->getPostBody()) {
@@ -61,8 +65,6 @@ class DotSUB_IO_Curl {
 		curl_setopt($curl, CURLOPT_URL, $request->getUrl());
 		// GET, POST, PUT...
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $request->getRequestMethod());
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
 		curl_setopt($curl, CURLOPT_SSLVERSION, 1);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		// For testing purposes
@@ -73,9 +75,19 @@ class DotSUB_IO_Curl {
 			curl_setopt($curl, $key, $var);
 		}
 		
-		$response = curl_exec($curl);
+		if($request->isDownload()) {
+			$fh = fopen($request->getFileName(), 'w');
+			curl_setopt($curl, CURLOPT_FILE, $fh);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			$response = curl_exec($curl);
+			fclose($fh);
+		} else {
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
+			$response = curl_exec($curl);
+		}
+		
 		if($response === false) {
-			throw new DotSUB_IO_Exception(curl_error($curl));
+			throw new DotSUB_IO_Exception("The request failed, and returned error code " . curl_errno($curl));
 		}
 		
 		// For testing purposes
@@ -87,10 +99,14 @@ class DotSUB_IO_Curl {
 		
 		$responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		
-		return array($responseBody, $responseHeaders, $responseCode);
+		return array(
+			$responseBody, $responseHeaders, $responseCode
+		);
+	
 	}
 
 	public function parseHttpResponse($respData, $headerSize){
+
 		if($headerSize) {
 			$responseBody = substr($respData, $headerSize);
 			$responseHeaders = substr($respData, 0, $headerSize);
@@ -101,18 +117,24 @@ class DotSUB_IO_Curl {
 		}
 		
 		$responseHeaders = $this->getHttpResponseHeaders($responseHeaders);
-		return array($responseHeaders, $responseBody);
+		return array(
+			$responseHeaders, $responseBody
+		);
+	
 	}
 
 	public function getHttpResponseHeaders($rawHeaders){
+
 		if(is_array($rawHeaders)) {
 			return $this->parseArrayHeaders($rawHeaders);
 		} else {
 			return $this->parseStringHeaders($rawHeaders);
 		}
+	
 	}
 
 	private function parseStringHeaders($rawHeaders){
+
 		$headers = array();
 		$responseHeaderLines = explode("\r\n", $rawHeaders);
 		foreach($responseHeaderLines as $headerLine) {
@@ -127,9 +149,11 @@ class DotSUB_IO_Curl {
 			}
 		}
 		return $headers;
+	
 	}
 
 	private function parseArrayHeaders($rawHeaders){
+
 		$header_count = count($rawHeaders);
 		$headers = array();
 		
@@ -143,14 +167,20 @@ class DotSUB_IO_Curl {
 		}
 		
 		return $headers;
+	
 	}
 
 	public function setOptions($options){
+
 		$this->options = $options + $this->options;
+	
 	}
 
 	public function setCredentials($credentials){
+
 		$this->options[CURLOPT_USERPWD] = $credentials[0] . ":" . $credentials[1];
+	
 	}
+
 }
 

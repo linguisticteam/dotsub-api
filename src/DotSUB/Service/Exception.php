@@ -1,11 +1,13 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+
 class DotSUB_Service_Exception extends DotSUB_Exception {
 	
 }
 
 class DotSUB_Service_Exception_Authentication extends DotSUB_Service_Exception{
 	public function __construct(){
-		$this->message="You must give your credentials as parameters to DotSUB_Service_Media, this task requires authentication";
+		$this->message="You must supply your credentials, as only authenticated clients can perform this task.";
 	}
 }
 

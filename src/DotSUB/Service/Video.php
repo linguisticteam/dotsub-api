@@ -1,4 +1,5 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 class DotSUB_Service_Video extends DotSUB_Service {
 	// MANDATORY FIELDS

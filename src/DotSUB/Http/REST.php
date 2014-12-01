@@ -1,9 +1,11 @@
 <?php
+require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 
 /**
  * Trying to make the request as RESTful as possible,
- * handles the actual execution of the request. 
- * 
+ * handles the actual execution of the request.
+ *
+ *
  * @author Bruno@Linguistic Team International
  */
 class DotSUB_Http_REST {
@@ -11,16 +13,15 @@ class DotSUB_Http_REST {
 	/**
 	 * Uses the IO method configured to execute the request.
 	 *
-	 * @param DotSUB_Client $client        	
-	 * @param DotSUB_Http_Request $req        	
+	 * @param DotSUB_Client $client
+	 * @param DotSUB_Http_Request $req
 	 * @return array The JSON response tranformed into an array.
 	 */
 	public static function execute(DotSUB_Client $client, DotSUB_Http_Request $req){
-		try {
-			$httpRequest = $client->getIo()->makeRequest($req);
-			return self::decodeHttpResponse($httpRequest);
-		} catch(DotSUB_Service_Exception $e) {
-		}
+
+		$httpRequest = $client->getIo()->makeRequest($req);
+		return self::decodeHttpResponse($httpRequest);
+	
 	}
 
 	/**
@@ -36,11 +37,12 @@ class DotSUB_Http_REST {
 	 * )
 	 * </code>
 	 *
-	 * @param DotSUB_Http_Request $response        	
+	 * @param DotSUB_Http_Request $response
 	 * @throws DotSUB_Service_Exception
 	 * @return array The JSON response tranformed into an array.
 	 */
 	public static function decodeHttpResponse(DotSUB_Http_Request $response){
+
 		$code = $response->getResponseHttpCode();
 		$body = $response->getResponseBody();
 		$decoded = null;
@@ -53,23 +55,25 @@ class DotSUB_Http_REST {
 			}
 			
 			$err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-			$err .= " Error Code: ($code)<br/>$msg<br/> $body";
-			
-			throw new DotSUB_Service_Exception($err, $code);
+			throw new DotSUB_Service_Exception($err, $msg, $code);
+		}
+		
+		if($response->isDownload()){
+			return null;
 		}
 		
 		$decoded = json_decode($body, true);
-		//If dotSUB returns an error in JSON format
+		// If dotSUB returns an error in JSON format
 		if(isset($decoded['status']['error']) && $decoded['status']['error'] == "true") {
 			$err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-			$err .= " Error Code: (" . $decoded['status']['code'] . ")<br/>" . $decoded['status']['message'] . "<br/> $body";
-			
-			throw new DotSUB_Service_Exception($err, $code);
+			throw new DotSUB_Service_Exception($err, $decoded['status']['message'], $decoded['status']['code']);
 		}
 		if($decoded === null || $decoded === "") {
-			throw new DotSUB_Service_Exception("Invalid json in service response: $body");
+			throw new DotSUB_Service_Exception("The JSON formatting of the response is invalid.", $body);
 		}
 		
-		return $decoded;
+		return $msg;
+	
 	}
+
 }
