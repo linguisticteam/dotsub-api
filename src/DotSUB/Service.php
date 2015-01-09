@@ -14,6 +14,7 @@ class DotSUB_Service {
 	protected $httpRequest;
 	protected $client;
 	protected $UUID;
+	protected $auth;
 
 	/**
 	 * Constructor for DotSUB_Service
@@ -64,6 +65,12 @@ class DotSUB_Service {
 			throw new DotSUB_Service_Exception("The video UUID is incorrect.");
 		}
 	
+	}
+
+	protected function requestWithAuthentication()
+	{
+		$this->auth = new DotSUB_Auth_Simple($this->client);
+		return $this->auth->sendCredentials($this->httpRequest);
 	}
 
 }

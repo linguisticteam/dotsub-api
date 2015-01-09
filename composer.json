@@ -2,10 +2,26 @@
     "name": "lti/dotsub-api",
     "type": "library",
     "description": "Client library for the DotSUB API",
-    "keywords": ["dotsub"],
+    "keywords": [
+        "dotsub",
+        "linguistic team international"
+    ],
     "homepage": "http://forum.linguisticteam.org",
+    "authors": [
+        {
+            "name": "Bruno De Carvalho",
+            "email": "decarvalho.bruno@free.fr",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=5.2.1"
+    },
+    "support": {
+        "email": "admin@linguisticteam.org"
+    },
+    "suggest": {
+        "google/apiclient": "This package's structure is drawn from the Google PHP API Client"
     },
     "autoload": {
         "classmap": [

@@ -11,6 +11,11 @@ require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
 class DotSUB_Service_Media extends DotSUB_Service {
 
 	/**
+	 * @var Holds all the information related to a video upload
+	 */
+	protected $video;
+
+	/**
 	 * Path: https://dotSUB.com/api/media
 	 *
 	 * Method: POST - Requires authentication
@@ -31,9 +36,8 @@ class DotSUB_Service_Media extends DotSUB_Service {
 		$this->addVideoProjectInfo($this->client->getClientProject());
 		
 		$this->httpRequest->setPostBody($this->getVideoInfo());
-		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
-		return $this->auth->sendCredentials($this->httpRequest);
+
+		return $this->requestWithAuthentication();
 	
 	}
 
@@ -80,8 +84,7 @@ class DotSUB_Service_Media extends DotSUB_Service {
 		$this->httpRequest->setRequestMethod("POST");
 		$this->createVideoInfo($videoData);
 		$this->httpRequest->setPostBody($this->getVideoInfo());
-		$this->auth = new DotSUB_Auth_Simple($this->client);
-		return $this->auth->sendCredentials($this->httpRequest);
+		return $this->requestWithAuthentication();
 	
 	}
 
@@ -97,8 +100,7 @@ class DotSUB_Service_Media extends DotSUB_Service {
 
 		$this->httpRequest->appendToUrl("/".$this->UUID);
 		$this->httpRequest->setRequestMethod("POST");
-		$this->auth = new DotSUB_Auth_Simple($this->client);
-		return $this->auth->sendCredentials($this->httpRequest);
+		return $this->requestWithAuthentication();
 	
 	}
 
@@ -136,9 +138,8 @@ class DotSUB_Service_Media extends DotSUB_Service {
 			$this->httpRequest->setQueryParam($k, $v);
 		}
 		$this->httpRequest->setRequestHeaders(array("Content-Length" => 0));
-		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
-		return $this->auth->sendCredentials($this->httpRequest);
+
+		return $this->requestWithAuthentication();
 	
 	}
 
@@ -194,9 +195,8 @@ class DotSUB_Service_Media extends DotSUB_Service {
 		$this->httpRequest->appendToUrl("/".$this->UUID."/translation");
 		$this->httpRequest->setRequestMethod("POST");
 		$this->httpRequest->setPostBody(array("file" => "@" . $filename, "language" => $language));
-		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
-		return $this->auth->sendCredentials($this->httpRequest);
+
+		return $this->requestWithAuthentication();
 	
 	}
 
@@ -233,4 +233,5 @@ class DotSUB_Service_Media extends DotSUB_Service {
 		$this->video->setProject($projectInfo);
 	
 	}
+
 }
