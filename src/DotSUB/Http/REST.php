@@ -59,7 +59,22 @@ class DotSUB_Http_REST
             }
 
             $err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-            throw new DotSUB_Service_Exception($err, $msg, $code);
+            switch ($code) {
+                case 502:
+                    throw new DotSUB_Service_Exception_Bad_Gateway($err, $body, $code);
+                    break;
+                case 401:
+                    throw new DotSUB_Service_Exception_Invalid_Credentials($err, $body, $code);
+                    break;
+                case 403:
+                    throw new DotSUB_Service_Exception_Forbidden($err, $msg, $code);
+                    break;
+                default:
+                    throw new DotSUB_Service_Exception($err, $msg, $code);
+                    break;
+
+            }
+
         }
 
         if ($response->isDownload()) {

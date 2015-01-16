@@ -70,17 +70,6 @@ class DotSUB_Service_Video extends DotSUB_Service
             // @TODO Ask dotSUB about this, it's not in the documentation.
             $this->fileNotAttached = "false";
 
-            // @TODO Handle mandatory fields better than this, the description
-            // can't be more than 800 chars for example.
-            if (empty($this->title)) {
-                throw new DotSUB_Service_Exception("title");
-            }
-            if (empty($this->description)) {
-                throw new DotSUB_Service_Exception("description");
-            }
-            if (empty($this->language)) {
-                throw new DotSUB_Service_Exception("language");
-            }
         }
     }
 

@@ -14,7 +14,7 @@ class DotSUB_Exception extends Exception {
 
 		$this->message = $message;
 		$this->code = $code;
-		$this->dsMessage = $dSMessage;
+		$this->dSMessage = $dSMessage;
 	
 	}
 	
