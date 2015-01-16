@@ -18,7 +18,12 @@ class DotSUB_IO_Curl
      */
     private $options = array();
 
-
+    /**
+     *
+     * Constructor for the Curl class, takes in an implementation of the method that will allow us to track
+     * downloaded/uploaded data with CURLOPT_PROGRESSFUNCTION
+     * @param DotSUB_IO_ProgressMonitorInterface $progressMonitor
+     */
     public function __construct(DotSUB_IO_ProgressMonitorInterface $progressMonitor = null)
     {
         $this->progressMonitor = $progressMonitor;
