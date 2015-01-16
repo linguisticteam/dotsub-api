@@ -1,5 +1,8 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+<?php namespace Lti\DotsubAPI\Auth;
+
+use Lti\DotsubAPI\DotSUB_Client;
+use Lti\DotsubAPI\Http\DotSUB_Http_Request;
+
 
 /**
  * The authentication scheme is pretty simple now, but that might change

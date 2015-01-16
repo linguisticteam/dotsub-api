@@ -1,9 +1,9 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
 date_default_timezone_set('UTC');
 
-
-
+use Lti\DotsubAPI\DotSUB_Client;
+use Lti\DotsubAPI\Service\DotSUB_Service_Media;
+use Lti\DotsubAPI\DotSUB_Config;
 
 
 

@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=5.2.1"
+        "php": ">=5.3"
     },
     "support": {
         "email": "admin@linguisticteam.org"
@@ -24,8 +24,8 @@
         "google/apiclient": "This package's structure is drawn from the Google PHP API Client"
     },
     "autoload": {
-        "classmap": [
-            "src/"
-        ]
+        "psr-4": {
+            "Lti\\DotsubAPI\\": "src/"
+        }
     }
 }

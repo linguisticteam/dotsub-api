@@ -1,6 +1,7 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
 
+use Lti\DotsubAPI\DotSUB_Client;
+use Lti\DotsubAPI\Service\DotSUB_Service_Language;
 
 
 
@@ -48,7 +49,7 @@ function display_all_languages(){
 	$response = $client->execute($request);
 	displayTable(array(
 		"Code", "Language"
-	), $response['languages']);
+	), $response->languages);
 
 }
 
@@ -59,7 +60,7 @@ function displayTable($columns, $data){
 		echo "<table><thead>
 			<tr>";
 		foreach($columns as $value) {
-			echo "<th scope=\"col\">" . $value . "</th>\n";
+			echo '<th scope="col">' . $value . "</th>\n";
 		}
 		echo "</tr>
 	  		</thead>

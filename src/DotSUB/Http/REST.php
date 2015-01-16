@@ -1,5 +1,11 @@
 <?php
-require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+namespace Lti\DotsubAPI\Http;
+
+use Lti\DotsubAPI\DotSUB_Client;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Bad_Gateway;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Forbidden;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Invalid_Credentials;
 
 /**
  * Trying to make the request as RESTful as possible,
@@ -17,7 +23,7 @@ class DotSUB_Http_REST
      * @param DotSUB_Client $client
      * @param DotSUB_Http_Request $req
      * @param boolean $format
-     * @return array The JSON response tranformed into an array.
+     * @return \stdClass The JSON response.
      */
     public static function execute(DotSUB_Client $client, DotSUB_Http_Request $req, $format = true)
     {

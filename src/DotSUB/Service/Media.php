@@ -1,5 +1,8 @@
 <?php
-require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+namespace Lti\DotsubAPI\Service;
+
+use Lti\DotsubAPI\DotSUB_Service;
+use Lti\DotsubAPI\Http\DotSUB_Http_Request;
 
 /**
  *
@@ -12,7 +15,7 @@ class DotSUB_Service_Media extends DotSUB_Service
 {
 
     /**
-     * @var Holds all the information related to a video upload
+     * @var string Holds all the information related to a video upload
      */
     protected $video;
 
@@ -24,7 +27,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * You can upload media to DotSUB from your system using a HTTP Post to our
      * media upload API. This form does require you to be authenticated.
      *
-     * @param stdClass $videoData
+     * @param \stdClass $videoData
      *            The video data to be sent in the upload
      */
     public function mediaUpload($videoData)
@@ -77,7 +80,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      *
      * Method: POST - Authentication required.
      *
-     * @param stdClass $videoData
+     * @param \stdClass $videoData
      *            The video data to be sent in the upload
      * @return DotSUB_Http_Request
      */
@@ -212,7 +215,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * Creating the object that will hold the video information (title,
      * description, filename...)
      *
-     * @param stdClass $videoInfo
+     * @param \stdClass $videoInfo
      * @param boolean $isUpload
      *            Are we going to upload a video?
      */
@@ -228,9 +231,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      */
     public function getVideoInfo()
     {
-
         return $this->video->getVars();
-
     }
 
     /**
@@ -240,9 +241,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      */
     public function addVideoProjectInfo($projectInfo)
     {
-
         $this->video->setProject($projectInfo);
-
     }
 
 }

@@ -1,5 +1,8 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../../autoload.php');
+<?php namespace Lti\DotsubAPI;
+
+use Lti\DotsubAPI\Auth\DotSUB_Auth_Simple;
+use Lti\DotsubAPI\Http\DotSUB_Http_Request;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception;
 
 class DotSUB_Service
 {

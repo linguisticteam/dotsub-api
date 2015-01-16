@@ -1,5 +1,7 @@
 <?php
-require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+namespace Lti\DotsubAPI\Http;
+
+use Lti\DotsubAPI\DotSUB_Tools;
 
 /**
  * The HTTP request that will be executed by the IO Class.

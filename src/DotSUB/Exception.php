@@ -1,6 +1,7 @@
-<?php
+<?php namespace Lti\DotsubAPI;
 
-class DotSUB_Exception extends Exception {
+class DotSUB_Exception extends \Exception
+{
 	protected $dSMessage;
 
 	/**

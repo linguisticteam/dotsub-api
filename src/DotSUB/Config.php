@@ -1,5 +1,4 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../../autoload.php');
+<?php namespace Lti\DotsubAPI;
 
 /**
  * Contains all the configuration elements which are handled by the client.
@@ -15,6 +14,7 @@ class DotSUB_Config {
 	// CC-Attribution Non-Commercial No Derivatives 3.0
 	const DS_LICENSE = 'a2be14e1-37d9-11dd-ae16-0800200c9a66';
 	private $config;
+	private $progressMonitor;
 
 	public function __construct(){
 		$this->config = array('username' => '', 'password' => '', 'project' => '', 'io_class' => 'DotSUB_IO_Curl');
@@ -43,6 +43,16 @@ class DotSUB_Config {
 
 	public function setClientProject($project){
 		$this->config['project'] = $project;
+	}
+
+	public function setProgressMonitor($progressMonitor)
+	{
+		$this->progressMonitor = $progressMonitor;
+	}
+
+	public function getProgressMonitor()
+	{
+		return $this->progressMonitor;
 	}
 
 }

@@ -1,5 +1,6 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../../../autoload.php');
+<?php namespace Lti\DotsubAPI\Service;
+
+use Lti\DotsubAPI\DotSUB_Service;
 
 class DotSUB_Service_Video extends DotSUB_Service
 {

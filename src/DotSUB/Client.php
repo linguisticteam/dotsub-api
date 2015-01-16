@@ -1,5 +1,7 @@
-<?php
-require_once realpath(dirname(__FILE__) . '/../../autoload.php');
+<?php namespace Lti\DotsubAPI;
+
+use Lti\DotsubAPI\Http\DotSUB_Http_REST;
+use Lti\DotsubAPI\IO\DotSUB_IO_ProgressMonitorInterface;
 
 /**
  * Handles client configuration, which is handed to the request as needed.
@@ -37,8 +39,8 @@ class DotSUB_Client
     public function getIo()
     {
         if (!isset($this->io)) {
-            $class = $this->config->getIoClass();
-            $this->io = new $class($this);
+            $class = 'Lti\DotsubAPI\IO\\' . $this->config->getIoClass();
+            $this->io = new $class($this->getProgressMonitor());
         }
         return $this->io;
     }
@@ -49,9 +51,19 @@ class DotSUB_Client
         $this->hasCredentials = true;
     }
 
+    public function setProgressMonitor(DotSUB_IO_ProgressMonitorInterface $progressMonitor)
+    {
+        $this->config->setProgressMonitor($progressMonitor);
+    }
+
     public function getClientProject()
     {
         return $this->config->getClientProject();
+    }
+
+    public function getProgressMonitor()
+    {
+        return $this->config->getProgressMonitor();
     }
 
     public function setClientProject($project)
