@@ -93,8 +93,6 @@ class DotSUB_IO_Curl
             // Set up the callback function that'll get the data
             curl_setopt($curl, CURLOPT_PROGRESSFUNCTION, [$this->progressMonitor, 'handleProgress']);
 
-            //@TODO : see the effect of the buffer on the amount of CURL output
-            curl_setopt($curl, CURLOPT_BUFFERSIZE, 128);
         }
 
         foreach ($this->options as $key => $var) {

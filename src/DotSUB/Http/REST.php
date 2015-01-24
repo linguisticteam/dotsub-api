@@ -6,6 +6,7 @@ use Lti\DotsubAPI\Service\DotSUB_Service_Exception;
 use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Bad_Gateway;
 use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Forbidden;
 use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Invalid_Credentials;
+use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Server_Error;
 
 /**
  * Trying to make the request as RESTful as possible,
@@ -74,6 +75,9 @@ class DotSUB_Http_REST
                     break;
                 case 403:
                     throw new DotSUB_Service_Exception_Forbidden($err, $msg, $code);
+                    break;
+                case 500:
+                    throw new DotSUB_Service_Exception_Server_Error($err, $msg, $code);
                     break;
                 default:
                     throw new DotSUB_Service_Exception($err, $msg, $code);

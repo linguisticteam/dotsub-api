@@ -199,7 +199,6 @@ class DotSUB_Service_Media extends DotSUB_Service
      */
     public function translationUpload($filename, $language)
     {
-
         if (!$this->client->hasCredentials()) {
             throw new DotSUB_Service_Exception_Authentication();
         }
@@ -209,6 +208,50 @@ class DotSUB_Service_Media extends DotSUB_Service
 
         return $this->requestWithAuthentication();
 
+    }
+
+    /**
+     *
+     * Media Workflow
+     *
+     * Path: https://dotsub.com/api/media/$UUID/workflow or
+     * https://dotsub.com/api/user/$username/media/$externalIdentifier/workflow
+     *
+     * Method: POST
+     *
+     * Changes can be made to the workflow state of translations and transcriptions via this API.
+     *
+     * Name                 Description                                                                                             Required
+     * workflowStatus       The status you want to change to. ["ASSIGNED", "TRANSLATED", "TRANSCRIBED", "REVISED", "PUBLISHED"]     Yes
+     * language             The language of the subtitles you wish to change state.                                                 Yes
+     * useTransition        This defaults to 'false'. Set this to 'true' if you want Dotsub to use the workflow to change states.   No
+     *
+     * @param $workflowStatus
+     * @param $language
+     * @param boolean $useTransition
+     * @throws DotSUB_Service_Exception_Authentication
+     *
+     */
+    public function mediaWorkflow($workflowStatus, $language = 'eng', $useTransition = false)
+    {
+        switch ($workflowStatus) {
+            case 'ASSIGNED':
+            case 'TRANSLATED':
+            case 'TRANSCRIBED':
+            case 'REVISED':
+            case 'PUBLISHED':
+                break;
+            default:
+                throw new DotSUB_Service_Exception('Workflow status must have one of following values: ASSIGNED, TRANSLATED, TRANSCRIBED, REVISED or PUBLISHED');
+        }
+        if (!$this->client->hasCredentials()) {
+            throw new DotSUB_Service_Exception_Authentication();
+        }
+        $this->httpRequest->appendToUrl("/" . $this->UUID . "/workflow");
+        $this->httpRequest->setQueryParam('workflowStatus', $workflowStatus);
+        $this->httpRequest->setQueryParam('language', $language);
+        $this->httpRequest->setQueryParam('useTransition', ($useTransition) ? 'true' : 'false');
+        $this->httpRequest->setRequestMethod("POST");
     }
 
     /**

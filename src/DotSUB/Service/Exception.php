@@ -42,6 +42,15 @@ class DotSUB_Service_Exception_Bad_Gateway extends DotSUB_Service_Exception
     }
 }
 
+class DotSUB_Service_Exception_Server_Error extends DotSUB_Service_Exception
+{
+    public function __construct($message, $dSMessage, $code)
+    {
+        parent::__construct($message, $dSMessage, $code);
+        $this->message = "Server errror.";
+    }
+}
+
 class DotSUB_Service_Exception_Video extends DotSUB_Service_Exception
 {
     public function __construct($field)

@@ -19,8 +19,8 @@
 		<div id="main">
 			<div id="content">
 				<h3>
-					<a href="http://dotsub.com/apidoc/api" target="_blank">Please refer
-						to the DotSUB API documentation for specifics.</a>
+					<a href="http://dotsub.com/apidoc/api" target="_blank">
+						Please refer to the DotSUB API documentation for specifics.</a>
 				</h3>
 				<ul>
 					<li><a href="language.php">Sample functions to test the Language
@@ -30,7 +30,8 @@
 					<li><a href="media.php">Sample functions to test the Caption API
 							(caption listing, transcription &amp; translation upload,
 							download & quality level).</a></li>
-
+					<li><a href="project.php">Sample functions to test the Project API
+							(project listing, project media management, project user management).</a></li>
 				</ul>
 			</div>
 		</div>
