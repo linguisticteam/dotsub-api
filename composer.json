@@ -22,7 +22,7 @@
     "satooshi/php-coveralls": "dev-master"
   },
   "support": {
-    "email": "linguisticteam.gmail.com"
+    "email": "linguisticteam@gmail.com"
   },
   "suggest": {
     "google/apiclient": "This package's structure is drawn from the Google PHP API Client"
