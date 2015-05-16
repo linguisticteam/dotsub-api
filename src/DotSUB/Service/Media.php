@@ -1,17 +1,16 @@
 <?php
 namespace Lti\DotsubAPI\Service;
 
-use Lti\DotsubAPI\DotSUB_Service;
-use Lti\DotsubAPI\Http\DotSUB_Http_Request;
+use Lti\DotsubAPI\Service;
+use Lti\DotsubAPI\Http\Http_Request;
 
 /**
  *
  * Handling the Media part of the dotSUB API.
  * Authentication is required in most cases, except when retrieving metadata.
  *
- * @author Bruno@Linguistic Team International
  */
-class DotSUB_Service_Media extends DotSUB_Service
+class Service_Media extends Service
 {
 
     /**
@@ -34,7 +33,7 @@ class DotSUB_Service_Media extends DotSUB_Service
     {
 
         if (!$this->client->hasCredentials()) {
-            throw new DotSUB_Service_Exception_Authentication();
+            throw new Service_Exception_Authentication();
         }
         $this->httpRequest->setRequestMethod("POST");
         $this->createVideoInfo($videoData, true);
@@ -57,7 +56,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * @param string $includeEmptyTranslations
      *            If true, also returns the data for translations with a 0%
      *            completion.
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function mediaMetadata($includeEmptyTranslations = false)
     {
@@ -82,7 +81,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      *
      * @param \stdClass $videoData
      *            The video data to be sent in the upload
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function metaDataEditing($videoData)
     {
@@ -101,7 +100,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * Path: https://dotSUB.com/api/media/$UUID or
      * https://dotSUB.com/api/user/$username/media/$externalIdentifier
      *
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function mediaDelete()
     {
@@ -127,14 +126,14 @@ class DotSUB_Service_Media extends DotSUB_Service
      *            The permission to be set/unset
      * @param string $isAdding
      *            Do we set or unset the permission?
-     * @throws DotSUB_Service_Exception_Authentication
-     * @return DotSUB_Http_Request
+     * @throws Service_Exception_Authentication
+     * @return Http_Request
      */
     public function manageMediaPermissions($action, $isAdding = true)
     {
 
         if (!$this->client->hasCredentials()) {
-            throw new DotSUB_Service_Exception_Authentication();
+            throw new Service_Exception_Authentication();
         }
         $this->httpRequest->appendToUrl("/" . $this->UUID . "/permissions");
         if ($isAdding) {
@@ -166,7 +165,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * @param string $query The query you wish to perform
      * @param int $limit Number of results per page
      * @param int $start The first result to return
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function mediaQuery($query, $limit = 20, $start = 0)
     {
@@ -194,13 +193,13 @@ class DotSUB_Service_Media extends DotSUB_Service
      *            The file to be uploaded
      * @param string $language
      *            The file language's language code
-     * @throws DotSUB_Service_Exception_Authentication
-     * @return DotSUB_Http_Request
+     * @throws Service_Exception_Authentication
+     * @return Http_Request
      */
     public function translationUpload($filename, $language)
     {
         if (!$this->client->hasCredentials()) {
-            throw new DotSUB_Service_Exception_Authentication();
+            throw new Service_Exception_Authentication();
         }
         $this->httpRequest->appendToUrl("/" . $this->UUID . "/translation");
         $this->httpRequest->setRequestMethod("POST");
@@ -229,7 +228,7 @@ class DotSUB_Service_Media extends DotSUB_Service
      * @param $workflowStatus
      * @param $language
      * @param boolean $useTransition
-     * @throws DotSUB_Service_Exception_Authentication
+     * @throws Service_Exception_Authentication
      *
      */
     public function mediaWorkflow($workflowStatus, $language = 'eng', $useTransition = false)
@@ -242,10 +241,10 @@ class DotSUB_Service_Media extends DotSUB_Service
             case 'PUBLISHED':
                 break;
             default:
-                throw new DotSUB_Service_Exception('Workflow status must have one of following values: ASSIGNED, TRANSLATED, TRANSCRIBED, REVISED or PUBLISHED');
+                throw new Service_Exception('Workflow status must have one of following values: ASSIGNED, TRANSLATED, TRANSCRIBED, REVISED or PUBLISHED');
         }
         if (!$this->client->hasCredentials()) {
-            throw new DotSUB_Service_Exception_Authentication();
+            throw new Service_Exception_Authentication();
         }
         $this->httpRequest->appendToUrl("/" . $this->UUID . "/workflow");
         $this->httpRequest->setQueryParam('workflowStatus', $workflowStatus);
@@ -265,7 +264,7 @@ class DotSUB_Service_Media extends DotSUB_Service
     public function createVideoInfo($videoInfo, $isUpload = false)
     {
 
-        $this->video = new DotSUB_Service_Video($videoInfo, $isUpload);
+        $this->video = new Service_Video($videoInfo, $isUpload);
 
     }
 

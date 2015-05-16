@@ -1,18 +1,17 @@
 <?php
 namespace Lti\DotsubAPI\Service;
 
-use Lti\DotsubAPI\Auth\DotSUB_Auth_Simple;
-use Lti\DotsubAPI\DotSUB_Service;
-use Lti\DotsubAPI\Http\DotSUB_Http_Request;
+use Lti\DotsubAPI\Auth\Auth_Simple;
+use Lti\DotsubAPI\Service;
+use Lti\DotsubAPI\Http\Http_Request;
 
 /**
  *
  * Handling the Caption part of the dotSUB API.
  * Authentication is required in most cases, except when retrieving metadata.
  *
- * @author Bruno@Linguistic Team International
  */
-class DotSUB_Service_Caption extends DotSUB_Service {
+class Service_Caption extends Service {
 
 	/**
 	 * Caption Listing
@@ -26,7 +25,7 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 	 * returned if they exist. If there are no captions in the selected language an error will be returned.
 	 *
 	 * @param string $language The language for which the captions should be listed
-	 * @return DotSUB_Http_Request
+	 * @return Http_Request
 	 */
 	public function captionsListing($language){
 
@@ -49,17 +48,17 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 	 * @param string $filename The file to be uploaded
 	 * @param string $language The file language's language code
 	 * @param string $type The type of file (transcription/translation)
-	 * @throws DotSUB_Service_Exception_Authentication
-	 * @return DotSUB_Http_Request
+	 * @throws Service_Exception_Authentication
+	 * @return Http_Request
 	 */
 	public function subtitleUpload($filename, $language = "", $type = "translation"){
 
 		if(!$this->client->hasCredentials()) {
-			throw new DotSUB_Service_Exception_Authentication();
+			throw new Service_Exception_Authentication();
 		}
 		
 		if($type != 'translation' && $type != "transcription") {
-			throw new DotSUB_Service_Exception("Subtitle type incorrect (translation/transcription).");
+			throw new Service_Exception("Subtitle type incorrect (translation/transcription).");
 		}
 		$this->httpRequest->appendToUrl("/" . $this->UUID . "/" . $type);
 		$this->httpRequest->setRequestMethod("POST");
@@ -68,13 +67,13 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 		);
 		if($type == "translation") {
 			if(empty($language)) {
-				throw new DotSUB_Service_Exception("The language of the uploaded file cannot be empty.");
+				throw new Service_Exception("The language of the uploaded file cannot be empty.");
 			}
 			$postItems["language"] = $language;
 		}
 		$this->httpRequest->setPostBody($postItems);
 		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
+		$this->auth = new Auth_Simple($this->client);
 		return $this->auth->sendCredentials($this->httpRequest);
 	
 	}
@@ -93,18 +92,18 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 	 * @param string $level
 	 * @param string $language
 	 * @param string $type
-	 * @throws DotSUB_Service_Exception_Authentication
-	 * @throws DotSUB_Service_Exception
-	 * @return DotSUB_Http_Request
+	 * @throws Service_Exception_Authentication
+	 * @throws Service_Exception
+	 * @return Http_Request
 	 */
 	public function setQualityLevel($level, $language = "", $type = "translation"){
 
 		if(!$this->client->hasCredentials()) {
-			throw new DotSUB_Service_Exception_Authentication();
+			throw new Service_Exception_Authentication();
 		}
 		
 		if($type != 'translation' && $type != "transcription") {
-			throw new DotSUB_Service_Exception("Subtitle type incorrect (translation/transcription).");
+			throw new Service_Exception("Subtitle type incorrect (translation/transcription).");
 		}
 		$this->httpRequest->appendToUrl("/" . $this->UUID . "/" . $type);
 		$this->httpRequest->setRequestMethod("POST");
@@ -114,13 +113,13 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 		
 		if($type == "translation") {
 			if(empty($language)) {
-				throw new DotSUB_Service_Exception("The language of the uploaded file cannot be empty.");
+				throw new Service_Exception("The language of the uploaded file cannot be empty.");
 			}
 			$postItems["language"] = $language;
 		}
 		$this->httpRequest->setPostBody($postItems);
 		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
+		$this->auth = new Auth_Simple($this->client);
 		return $this->auth->sendCredentials($this->httpRequest);
 	
 	}
@@ -138,17 +137,17 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 	 *
 	 * @param string $language The language of the subtitle file to download
 	 * @param string $format The format of the file (srt,tt,vtt)
-	 * @throws DotSUB_Service_Exception_Authentication
-	 * @throws DotSUB_Service_Exception
+	 * @throws Service_Exception_Authentication
+	 * @throws Service_Exception
 	 */
 	public function subtitleDownload($language, $format = "srt"){
 
 		if(!$this->client->hasCredentials()) {
-			throw new DotSUB_Service_Exception_Authentication();
+			throw new Service_Exception_Authentication();
 		}
 		
 		if($format != 'srt' && $format != "tt" && $format != "vtt") {
-			throw new DotSUB_Service_Exception("Subtitle format/file extension not recognized.");
+			throw new Service_Exception("Subtitle format/file extension not recognized.");
 		}
 		
 		$this->httpRequest->setUrl("https://dotsub.com/media/");
@@ -161,7 +160,7 @@ class DotSUB_Service_Caption extends DotSUB_Service {
 		
 		$this->httpRequest->setPostBody($postItems);
 		
-		$this->auth = new DotSUB_Auth_Simple($this->client);
+		$this->auth = new Auth_Simple($this->client);
 		return $this->auth->sendCredentials($this->httpRequest);
 	
 	}

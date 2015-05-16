@@ -1,31 +1,35 @@
 {
-    "name": "lti/dotsub-api",
-    "type": "library",
-    "description": "Client library for the DotSUB API",
-    "keywords": [
-        "dotsub",
-        "linguistic team international"
-    ],
-    "homepage": "http://forum.linguisticteam.org",
-    "authors": [
-        {
-            "name": "Bruno De Carvalho",
-            "email": "decarvalho.bruno@free.fr",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.3"
-    },
-    "support": {
-        "email": "admin@linguisticteam.org"
-    },
-    "suggest": {
-        "google/apiclient": "This package's structure is drawn from the Google PHP API Client"
-    },
-    "autoload": {
-        "psr-4": {
-            "Lti\\DotsubAPI\\": "src/"
-        }
+  "name": "lti/dotsub-api",
+  "type": "library",
+  "description": "Client library for the DotSUB API",
+  "keywords": [
+    "dotsub",
+    "linguistic team international"
+  ],
+  "homepage": "http://forum.linguisticteam.org",
+  "authors": [
+    {
+      "name": "Bruno De Carvalho",
+      "email": "decarvalho.bruno@free.fr",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.5",
+    "satooshi/php-coveralls": "dev-master"
+  },
+  "support": {
+    "email": "admin@linguisticteam.org"
+  },
+  "suggest": {
+    "google/apiclient": "This package's structure is drawn from the Google PHP API Client"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lti\\DotsubAPI\\": "src/"
+    }
+  }
 }

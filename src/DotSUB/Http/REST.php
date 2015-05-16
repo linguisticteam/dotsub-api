@@ -1,32 +1,32 @@
 <?php
 namespace Lti\DotsubAPI\Http;
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\Service\DotSUB_Service_Exception;
-use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Bad_Gateway;
-use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Forbidden;
-use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Invalid_Credentials;
-use Lti\DotsubAPI\Service\DotSUB_Service_Exception_Server_Error;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Service\Service_Exception;
+use Lti\DotsubAPI\Service\Service_Exception_Bad_Gateway;
+use Lti\DotsubAPI\Service\Service_Exception_Forbidden;
+use Lti\DotsubAPI\Service\Service_Exception_Invalid_Credentials;
+use Lti\DotsubAPI\Service\Service_Exception_Server_Error;
 
 /**
  * Trying to make the request as RESTful as possible,
  * handles the actual execution of the request.
  *
  *
- * @author Bruno@Linguistic Team International
+ *
  */
-class DotSUB_Http_REST
+class Http_REST
 {
 
     /**
      * Uses the IO method configured to execute the request.
      *
-     * @param DotSUB_Client $client
-     * @param DotSUB_Http_Request $req
+     * @param Client $client
+     * @param Http_Request $req
      * @param boolean $format
      * @return \stdClass The JSON response.
      */
-    public static function execute(DotSUB_Client $client, DotSUB_Http_Request $req, $format = true)
+    public static function execute(Client $client, Http_Request $req, $format = true)
     {
 
         $httpRequest = $client->getIo()->makeRequest($req);
@@ -47,11 +47,11 @@ class DotSUB_Http_REST
      * )
      * </code>
      *
-     * @param DotSUB_Http_Request $response
-     * @throws DotSUB_Service_Exception
+     * @param Http_Request $response
+     * @throws Service_Exception
      * @return array The JSON response tranformed into an array.
      */
-    public static function decodeHttpResponse(DotSUB_Http_Request $response, $format)
+    public static function decodeHttpResponse(Http_Request $response, $format)
     {
 
         $code = $response->getResponseHttpCode();
@@ -68,19 +68,19 @@ class DotSUB_Http_REST
             $err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
             switch ($code) {
                 case 502:
-                    throw new DotSUB_Service_Exception_Bad_Gateway($err, $body, $code);
+                    throw new Service_Exception_Bad_Gateway($err, $body, $code);
                     break;
                 case 401:
-                    throw new DotSUB_Service_Exception_Invalid_Credentials($err, $body, $code);
+                    throw new Service_Exception_Invalid_Credentials($err, $body, $code);
                     break;
                 case 403:
-                    throw new DotSUB_Service_Exception_Forbidden($err, $msg, $code);
+                    throw new Service_Exception_Forbidden($err, $msg, $code);
                     break;
                 case 500:
-                    throw new DotSUB_Service_Exception_Server_Error($err, $msg, $code);
+                    throw new Service_Exception_Server_Error($err, $msg, $code);
                     break;
                 default:
-                    throw new DotSUB_Service_Exception($err, $msg, $code);
+                    throw new Service_Exception($err, $msg, $code);
                     break;
 
             }
@@ -95,10 +95,10 @@ class DotSUB_Http_REST
         // If dotSUB returns an error in JSON format
         if (isset($decoded->status->error) && $decoded->status->error == "true") {
             $err = 'The ' . $response->getRequestMethod() . ' request to "' . $response->getUrl() . '" failed.';
-            throw new DotSUB_Service_Exception($err, $decoded->status->message, $decoded->status->code);
+            throw new Service_Exception($err, $decoded->status->message, $decoded->status->code);
         }
         if ($decoded === null || $decoded === "") {
-            throw new DotSUB_Service_Exception("The JSON formatting of the response is invalid.", $body);
+            throw new Service_Exception("The JSON formatting of the response is invalid.", $body);
         }
 
         if ($format) {

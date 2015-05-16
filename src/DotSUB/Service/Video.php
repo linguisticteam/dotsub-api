@@ -1,8 +1,8 @@
 <?php namespace Lti\DotsubAPI\Service;
 
-use Lti\DotsubAPI\DotSUB_Service;
+use Lti\DotsubAPI\Service;
 
-class DotSUB_Service_Video extends DotSUB_Service
+class Service_Video extends Service
 {
     // MANDATORY FIELDS
     // The title of this video.
@@ -62,7 +62,7 @@ class DotSUB_Service_Video extends DotSUB_Service
 
         if ($isUpload) {
             if (!is_readable(str_replace("@", "", $this->file))) {
-                throw new DotSUB_Service_Exception("A readable file must be given for upload.");
+                throw new Service_Exception("A readable file must be given for upload.");
             }
             if (strpos($this->file, "@") === false) {
                 $this->file = "@" . $this->file;

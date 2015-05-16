@@ -1,13 +1,13 @@
 <?php namespace Lti\DotsubAPI\Service;
 
 
-use Lti\DotsubAPI\DotSUB_Exception;
+use Lti\DotsubAPI\Exception;
 
-class DotSUB_Service_Exception extends DotSUB_Exception
+class Service_Exception extends Exception
 {
 }
 
-class DotSUB_Service_Exception_Authentication extends DotSUB_Service_Exception
+class Service_Exception_Authentication extends Service_Exception
 {
     public function __construct()
     {
@@ -15,7 +15,7 @@ class DotSUB_Service_Exception_Authentication extends DotSUB_Service_Exception
     }
 }
 
-class DotSUB_Service_Exception_Invalid_Credentials extends DotSUB_Service_Exception
+class Service_Exception_Invalid_Credentials extends Service_Exception
 {
     public function __construct($message, $dSMessage, $code)
     {
@@ -24,7 +24,7 @@ class DotSUB_Service_Exception_Invalid_Credentials extends DotSUB_Service_Except
     }
 }
 
-class DotSUB_Service_Exception_Forbidden extends DotSUB_Service_Exception
+class Service_Exception_Forbidden extends Service_Exception
 {
     public function __construct($message, $dSMessage, $code)
     {
@@ -33,7 +33,7 @@ class DotSUB_Service_Exception_Forbidden extends DotSUB_Service_Exception
     }
 }
 
-class DotSUB_Service_Exception_Bad_Gateway extends DotSUB_Service_Exception
+class Service_Exception_Bad_Gateway extends Service_Exception
 {
     public function __construct($message, $dSMessage, $code)
     {
@@ -42,7 +42,7 @@ class DotSUB_Service_Exception_Bad_Gateway extends DotSUB_Service_Exception
     }
 }
 
-class DotSUB_Service_Exception_Server_Error extends DotSUB_Service_Exception
+class Service_Exception_Server_Error extends Service_Exception
 {
     public function __construct($message, $dSMessage, $code)
     {
@@ -51,7 +51,7 @@ class DotSUB_Service_Exception_Server_Error extends DotSUB_Service_Exception
     }
 }
 
-class DotSUB_Service_Exception_Video extends DotSUB_Service_Exception
+class Service_Exception_Video extends Service_Exception
 {
     public function __construct($field)
     {
@@ -59,7 +59,7 @@ class DotSUB_Service_Exception_Video extends DotSUB_Service_Exception
     }
 }
 
-class DotSUB_Service_Exception_Project extends DotSUB_Service_Exception
+class Service_Exception_Project extends Service_Exception
 {
     public function __construct()
     {

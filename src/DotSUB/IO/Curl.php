@@ -1,15 +1,15 @@
 <?php
 namespace Lti\DotsubAPI\IO;
 
-use Lti\DotsubAPI\Http\DotSUB_Http_Request;
-use Lti\DotsubAPI\IO\DotSUB_IO_ProgressMonitorInterface;
+use Lti\DotsubAPI\Http\Http_Request;
+use Lti\DotsubAPI\IO\IO_ProgressMonitorInterface;
 
 /**
  * Handling an HTTP request with Curl.
  *
- * @author Bruno@Linguistic Team International
+ *
  */
-class DotSUB_IO_Curl
+class IO_Curl
 {
     /**
      *
@@ -22,9 +22,9 @@ class DotSUB_IO_Curl
      *
      * Constructor for the Curl class, takes in an implementation of the method that will allow us to track
      * downloaded/uploaded data with CURLOPT_PROGRESSFUNCTION
-     * @param DotSUB_IO_ProgressMonitorInterface $progressMonitor
+     * @param IO_ProgressMonitorInterface $progressMonitor
      */
-    public function __construct(DotSUB_IO_ProgressMonitorInterface $progressMonitor = null)
+    public function __construct(IO_ProgressMonitorInterface $progressMonitor = null)
     {
         $this->progressMonitor = $progressMonitor;
     }
@@ -33,10 +33,10 @@ class DotSUB_IO_Curl
      * Fills the HTTP request with the responses it got from executing the
      * request.
      *
-     * @param DotSUB_Http_Request $request
-     * @return DotSUB_Http_Request
+     * @param Http_Request $request
+     * @return Http_Request
      */
-    public function makeRequest(DotSUB_Http_Request $request)
+    public function makeRequest(Http_Request $request)
     {
 
         list($responseData, $responseHeaders, $respHttpCode) = $this->executeRequest($request);
@@ -55,11 +55,11 @@ class DotSUB_IO_Curl
 
     /**
      *
-     * @param DotSUB_Http_Request $request
-     * @throws DotSUB_IO_Exception
+     * @param Http_Request $request
+     * @throws IO_Exception
      * @return array
      */
-    public function executeRequest(DotSUB_Http_Request $request)
+    public function executeRequest(Http_Request $request)
     {
         $curl = curl_init();
 
@@ -100,18 +100,21 @@ class DotSUB_IO_Curl
         }
 
         if ($request->isDownload()) {
-            $fh = fopen($request->getFileName(), 'w');
-            curl_setopt($curl, CURLOPT_FILE, $fh);
+            $fileHandler = fopen($request->getFileName(), 'w');
+            curl_setopt($curl, CURLOPT_FILE, $fileHandler);
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
             $response = curl_exec($curl);
-            fclose($fh);
+            fclose($fileHandler);
         } else {
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
             $response = curl_exec($curl);
         }
 
+        //Allowing the request to be reused by resetting its params to their state when the request was instantiated.
+        $request->reset();
+
         if ($response === false) {
-            throw new DotSUB_IO_Exception("The request failed, and returned error code " . curl_errno($curl));
+            throw new IO_Exception("The request failed, and returned error code " . curl_errno($curl));
         }
 
         // For testing purposes

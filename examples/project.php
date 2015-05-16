@@ -1,8 +1,8 @@
-<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once '../vendor/autoload.php';
 date_default_timezone_set('UTC');
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\Service\DotSUB_Service_Project;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Service\Service_Project;
 
 
 
@@ -31,11 +31,11 @@ function projectMediaListing($limit = 20, $start = 0)
     $clientPassword = '';
     $clientProject = '';
 
-    $client = new DotSUB_Client();
+    $client = new Client();
     $client->setClientCredentials($clientUsername, $clientPassword);
     $client->setClientProject($clientProject);
 
-    $service = new DotSUB_Service_Project($client);
+    $service = new Service_Project($client);
     $request = $service->projectMediaListing($limit, $start);
     $response = $client->execute($request);
 
@@ -64,11 +64,11 @@ function addMediaToProject($UUID)
     $clientPassword = '';
     $clientProject = '';
 
-    $client = new DotSUB_Client();
+    $client = new Client();
     $client->setClientCredentials($clientUsername, $clientPassword);
     $client->setClientProject($clientProject);
 
-    $service = new DotSUB_Service_Project($client);
+    $service = new Service_Project($client);
     $service->setUUID($UUID);
     $request = $service->addMediaToProject();
     $response = $client->execute($request);
@@ -99,11 +99,11 @@ function removeMediaFromProject($UUID)
     $clientPassword = '';
     $clientProject = '';
 
-    $client = new DotSUB_Client();
+    $client = new Client();
     $client->setClientCredentials($clientUsername, $clientPassword);
     $client->setClientProject($clientProject);
 
-    $service = new DotSUB_Service_Project($client);
+    $service = new Service_Project($client);
     $service->setUUID($UUID);
     $request = $service->removeMediaFromProject();
     $response = $client->execute($request);
@@ -136,11 +136,11 @@ function getProjectUsers($type, $limit = 20, $start = 0)
     $clientPassword = '';
     $clientProject = '';
 
-    $client = new DotSUB_Client();
+    $client = new Client();
     $client->setClientCredentials($clientUsername, $clientPassword);
     $client->setClientProject($clientProject);
 
-    $service = new DotSUB_Service_Project($client);
+    $service = new Service_Project($client);
     $request = $service->getProjectUsers($type, $limit, $start);
     $response = $client->execute($request);
 
@@ -168,11 +168,11 @@ function listProjectUserDetails($type, $username)
     $clientPassword = '';
     $clientProject = '';
 
-    $client = new DotSUB_Client();
+    $client = new Client();
     $client->setClientCredentials($clientUsername, $clientPassword);
     $client->setClientProject($clientProject);
 
-    $service = new DotSUB_Service_Project($client);
+    $service = new Service_Project($client);
     $request = $service->listProjectUserDetails($type, $username);
     $response = $client->execute($request);
 

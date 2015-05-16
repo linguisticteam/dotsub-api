@@ -1,15 +1,18 @@
 <?php namespace Lti\DotsubAPI;
 
-use Lti\DotsubAPI\Http\DotSUB_Http_REST;
-use Lti\DotsubAPI\IO\DotSUB_IO_ProgressMonitorInterface;
+use Lti\DotsubAPI\Http\Http_REST;
+use Lti\DotsubAPI\IO\IO_ProgressMonitorInterface;
 
 /**
  * Handles client configuration, which is handed to the request as needed.
  *
- * @author Bruno@Linguistic Team International
+ *
  */
-class DotSUB_Client
+class Client
 {
+    /**
+     * @var Config
+     */
     private $config;
     private $io;
     private $hasCredentials = false;
@@ -23,7 +26,7 @@ class DotSUB_Client
         if (!function_exists('curl_exec')) {
             trigger_error("This code needs CURL to handle HTTP Requests.", E_ERROR);
         }
-        $this->config = new DotSUB_Config($config);
+        $this->config = new Config($config);
     }
 
     public function getClientCredentials()
@@ -51,7 +54,7 @@ class DotSUB_Client
         $this->hasCredentials = true;
     }
 
-    public function setProgressMonitor(DotSUB_IO_ProgressMonitorInterface $progressMonitor)
+    public function setProgressMonitor(IO_ProgressMonitorInterface $progressMonitor)
     {
         $this->config->setProgressMonitor($progressMonitor);
     }
@@ -73,12 +76,16 @@ class DotSUB_Client
 
     public function execute($request, $format = true)
     {
-        return DotSUB_Http_REST::execute($this, $request, $format);
+        return Http_REST::execute($this, $request, $format);
     }
 
     public function hasCredentials()
     {
         $u = $this->config->getClientCredentials();
         return (!empty($u[0]) && !empty($u[1]));
+    }
+
+    public function getConfig(){
+        return $this->config->getConfig();
     }
 }

@@ -1,9 +1,9 @@
-<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once '../vendor/autoload.php';
 date_default_timezone_set('UTC');
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\Service\DotSUB_Service_Media;
-use Lti\DotsubAPI\DotSUB_Config;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Service\Service_Media;
+use Lti\DotsubAPI\Config;
 
 
 
@@ -25,18 +25,18 @@ function upload_media(){
 	// insert DotSUB project UUID here (optional)
 	$clientProject = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
 	$client->setClientProject($clientProject);
-	$service = new DotSUB_Service_Media($client, false);
+	$service = new Service_Media($client, false);
 	
 	$v = new stdClass();
 	$v->title = "video title";
 	$v->description = "video description";
-	$v->language = DotSUB_Config::DS_LANG_ISO_CODE;
+	$v->language = Config::DS_LANG_ISO_CODE;
 	// Default DotSUB license for new videos:
 	// CC-Attribution Non-Commercial No Derivatives 3.0
-	$v->license = DotSUB_Config::DS_LICENSE;
+	$v->license = Config::DS_LICENSE;
 	$v->project = "uuid of the project";
 	$v->director = "director";
 	$v->producer = "producer";
@@ -66,8 +66,8 @@ function display_media_metadata(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
-	$service = new DotSUB_Service_Media($client);
+	$client = new Client();
+	$service = new Service_Media($client);
 	$service->setUUID($UUID);
 	$request = $service->mediaMetadata(true);
 	$response = $client->execute($request);
@@ -97,9 +97,9 @@ function update_metadata(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Media($client);
+	$service = new Service_Media($client);
 	$service->setUUID($UUID);
 	
 	$v = new stdClass();
@@ -135,9 +135,9 @@ function delete_media(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Media($client, false);
+	$service = new Service_Media($client, false);
 	$service->setUUID($UUID);
 	
 	$request = $service->mediaDelete();
@@ -170,9 +170,9 @@ function manage_permissions(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Media($client, false);
+	$service = new Service_Media($client, false);
 	
 	$action = array(
 		"action" => "READ/WRITE/UPDATE_TRANSCRIPTION/CREATE_TRANSLATION", "username" => "if needed"
@@ -203,8 +203,8 @@ function manage_permissions(){
  */
 function media_query(){
 
-	$client = new DotSUB_Client();
-	$service = new DotSUB_Service_Media($client, false);
+	$client = new Client();
+	$service = new Service_Media($client, false);
 	
 	/**
 	 * Examples of searches:

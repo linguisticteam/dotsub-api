@@ -1,7 +1,7 @@
-<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once '../vendor/autoload.php';
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\Service\DotSUB_Service_Language;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Service\Service_Language;
 
 
 
@@ -21,8 +21,8 @@ use Lti\DotsubAPI\Service\DotSUB_Service_Language;
  */
 function display_one_language($language=""){
 
-	$client = new DotSUB_Client();
-	$service = new DotSUB_Service_Language($client);
+	$client = new Client();
+	$service = new Service_Language($client);
 	$request = $service->languageMapping($language);
 	$response = $client->execute($request);
 	echo "<pre>";
@@ -42,8 +42,8 @@ function display_one_language($language=""){
  */
 function display_all_languages(){
 
-	$client = new DotSUB_Client();
-	$service = new DotSUB_Service_Language($client);
+	$client = new Client();
+	$service = new Service_Language($client);
 	$request = $service->languageListing();
 	
 	$response = $client->execute($request);

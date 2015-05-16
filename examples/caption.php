@@ -1,7 +1,7 @@
-<?php require_once realpath(dirname(__FILE__) . '/../autoload.php');
+<?php require_once '../vendor/autoload.php';
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\Service\DotSUB_Service_Caption;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Service\Service_Caption;
 
 date_default_timezone_set('UTC');
 
@@ -26,8 +26,8 @@ function captions_listing(){
 	$UUID = "";
 	$language = "";
 	
-	$client = new DotSUB_Client();
-	$service = new DotSUB_Service_Caption($client, false);
+	$client = new Client();
+	$service = new Service_Caption($client, false);
 	$service->setUUID($UUID);
 	
 	$request = $service->captionsListing($language);
@@ -58,9 +58,9 @@ function transcription_upload(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Caption($client, false);
+	$service = new Service_Caption($client, false);
 	$service->setUUID($UUID);
 	
 	$request = $service->subtitleUpload("path/file", "language code, see language table", "transcription or translation");
@@ -91,9 +91,9 @@ function transcription_quality(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Caption($client, false);
+	$service = new Service_Caption($client, false);
 	$service->setUUID($UUID);
 	
 	$request = $service->setQualityLevel("quality level", "language", "translation or transcription");
@@ -124,9 +124,9 @@ function subtitle_download(){
 	// insert UUID of the video to manipulate
 	$UUID = "";
 	
-	$client = new DotSUB_Client();
+	$client = new Client();
 	$client->setClientCredentials($clientUsername, $clientPassword);
-	$service = new DotSUB_Service_Caption($client, false);
+	$service = new Service_Caption($client, false);
 	$service->setUUID($UUID);
 	
 	$request = $service->subtitleDownload("language", "format");

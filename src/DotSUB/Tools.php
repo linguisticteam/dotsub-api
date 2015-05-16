@@ -3,9 +3,9 @@
 /**
  * Various utility functions used throughout the code (or not).
  *
- * @author Bruno@Linguistic Team International
+ *
  */
-class DotSUB_Tools
+class Tools
 {
 
     /**

@@ -1,35 +1,34 @@
 <?php namespace Lti\DotsubAPI\Service;
 
-use Lti\DotsubAPI\DotSUB_Client;
-use Lti\DotsubAPI\DotSUB_Exception;
-use Lti\DotsubAPI\DotSUB_Service;
-use Lti\DotsubAPI\Http\DotSUB_Http_Request;
+use Lti\DotsubAPI\Client;
+use Lti\DotsubAPI\Exception;
+use Lti\DotsubAPI\Service;
+use Lti\DotsubAPI\Http\Http_Request;
 
 /**
  *
  * Handling the Project part of the dotSUB API.
  * Authentication is required in most cases, except when retrieving metadata.
  *
- * @author Bruno@Linguistic Team International
  */
-class DotSUB_Service_Project extends DotSUB_Service
+class Service_Project extends Service
 {
 
     /**
      * Constructor for the Project API. The client has to be initialized with both the user's credentials and project
      * before instantiating this class.
      *
-     * @param DotSUB_Client $client
-     * @throws DotSUB_Service_Exception
-     * @throws DotSUB_Service_Exception_Project
+     * @param Client $client
+     * @throws Service_Exception
+     * @throws Service_Exception_Project
      */
-    public function __construct(DotSUB_Client $client)
+    public function __construct(Client $client)
     {
         self::$SERVICE_URL = "https://dotSUB.com/api/project";
         parent::__construct($client);
         $this->projectID = $this->client->getClientProject();
         if (!$this->projectID) {
-            throw new DotSUB_Service_Exception_Project();
+            throw new Service_Exception_Project();
         }
     }
 
@@ -42,7 +41,7 @@ class DotSUB_Service_Project extends DotSUB_Service
      *
      * The project listing API will list all projects a user currently manages.
      *
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function projectListing()
     {
@@ -65,8 +64,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      *
      * @param int $limit
      * @param int $start
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Service_Exception_Project
+     * @return Http_Request
+     * @throws Service_Exception_Project
      */
     public function projectMediaListing($limit = 20, $start = 0)
     {
@@ -88,8 +87,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      * Name    Description                                          Required
      * uuid    The uuid of the media to be added to the project.    Yes
      *
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Exception
+     * @return Http_Request
+     * @throws Exception
      */
     public function addMediaToProject()
     {
@@ -109,8 +108,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      * Name    Description                                          Required
      * uuid    The uuid of the media to be added to the project.    Yes
      *
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Exception
+     * @return Http_Request
+     * @throws Exception
      */
     public function removeMediaFromProject()
     {
@@ -134,7 +133,7 @@ class DotSUB_Service_Project extends DotSUB_Service
      * @param string $type trancribers or translators
      * @param int $limit limit of users per page
      * @param int $start index from which to start
-     * @throws DotSUB_Service_Exception
+     * @throws Service_Exception
      */
     public function getProjectUsers($type, $limit = 20, $start = 0)
     {
@@ -143,7 +142,7 @@ class DotSUB_Service_Project extends DotSUB_Service
             case 'translators':
                 break;
             default:
-                throw new DotSUB_Service_Exception('The user parameter must be set to either "transcribers" or "translators"');
+                throw new Service_Exception('The user parameter must be set to either "transcribers" or "translators"');
         }
         $this->httpRequest->appendToUrl("/" . $this->projectID . "/" . $type);
         return $this->requestWithAuthentication();
@@ -161,8 +160,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      *
      * @param $type
      * @param $username
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Service_Exception
+     * @return Http_Request
+     * @throws Service_Exception
      */
     public function listProjectUserDetails($type, $username)
     {
@@ -171,7 +170,7 @@ class DotSUB_Service_Project extends DotSUB_Service
             case 'translators':
                 break;
             default:
-                throw new DotSUB_Service_Exception('The user parameter must be set to either "transcribers" or "translators"');
+                throw new Service_Exception('The user parameter must be set to either "transcribers" or "translators"');
         }
         $this->httpRequest->appendToUrl("/" . $this->projectID . "/" . $type . "/" . $username);
         return $this->requestWithAuthentication();
@@ -194,8 +193,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      *
      * @param $username
      * @param array $languages
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Service_Exception
+     * @return Http_Request
+     * @throws Service_Exception
      */
     public function addProjectUser($username, array $languages)
     {
@@ -203,7 +202,7 @@ class DotSUB_Service_Project extends DotSUB_Service
         $this->httpRequest->appendToUrl("/" . $this->projectID . "/users");
 
         if (!$username) {
-            throw new DotSUB_Service_Exception('The user to add to the project is empty');
+            throw new Service_Exception('The user to add to the project is empty');
         }
         $url = $this->httpRequest->getUrlToString().'?username='.$username;
         $url.= "&language=".implode('&language=',$languages);
@@ -225,8 +224,8 @@ class DotSUB_Service_Project extends DotSUB_Service
      * Name    Description                                              Required
      * username    The username of the user to be added to the project    Yes
      * @param $username
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Service_Exception
+     * @return Http_Request
+     * @throws Service_Exception
      */
     public function removeProjectUser($username)
     {
@@ -234,7 +233,7 @@ class DotSUB_Service_Project extends DotSUB_Service
         if ($username) {
             $this->httpRequest->setQueryParam('username', $username);
         } else {
-            throw new DotSUB_Service_Exception('The user to remove from the project is empty');
+            throw new Service_Exception('The user to remove from the project is empty');
         }
         $this->httpRequest->appendToUrl("/" . $this->projectID . "/users");
 
@@ -257,7 +256,7 @@ class DotSUB_Service_Project extends DotSUB_Service
      *
      * @param int $limit
      * @param int $start
-     * @return DotSUB_Http_Request
+     * @return Http_Request
      */
     public function listProjectUsers($limit = 20, $start = 0)
     {
@@ -270,13 +269,13 @@ class DotSUB_Service_Project extends DotSUB_Service
 
     /**
      * Adds or deletes a media from a project, using the media's UUID.
-     * A media UUID can be set using DotSUB_Service::setUUID();
+     * A media UUID can be set using Service::setUUID();
      *
      *
-     * @see Lti\DotsubAPI\DotSUB_Service::setUUID();
+     * @see Lti\DotsubAPI\Service::setUUID();
      * @param string $action
-     * @return DotSUB_Http_Request
-     * @throws DotSUB_Exception
+     * @return Http_Request
+     * @throws Exception
      */
     private function toggleProjectMedia($action = 'PUT')
     {
@@ -285,7 +284,7 @@ class DotSUB_Service_Project extends DotSUB_Service
         if ($this->UUID) {
             $this->httpRequest->setQueryParam('uuid', $this->UUID);
         } else {
-            throw new DotSUB_Exception('The UUID of the media to add/remove from a project is missing.');
+            throw new Exception('The UUID of the media to add/remove from a project is missing.');
         }
         return $this->requestWithAuthentication();
     }
