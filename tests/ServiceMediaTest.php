@@ -80,9 +80,8 @@ class ServiceMediaTest extends PHPUnit_Framework_TestCase
         $service = new \Lti\DotsubAPI\Service\Service_Media($client);
         $service->setUUID($UUID);
         $request = $service->mediaMetadata(true);
-        $response = $client->execute($request);
+        $this->assertEquals('GET',$request->getRequestMethod());
 
-        $this->assertEquals('200',\Lti\DotsubAPI\Http\Http_REST::$httpResponse->getResponseHttpCode());
     }
 
 }
