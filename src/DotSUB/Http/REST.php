@@ -17,6 +17,7 @@ use Lti\DotsubAPI\Service\Service_Exception_Server_Error;
  */
 class Http_REST
 {
+    public static $httpResponse;
 
     /**
      * Uses the IO method configured to execute the request.
@@ -29,8 +30,8 @@ class Http_REST
     public static function execute(Client $client, Http_Request $req, $format = true)
     {
 
-        $httpRequest = $client->getIo()->makeRequest($req);
-        return self::decodeHttpResponse($httpRequest, $format);
+        static::$httpResponse = $client->getIo()->makeRequest($req);
+        return self::decodeHttpResponse(static::$httpResponse, $format);
 
     }
 

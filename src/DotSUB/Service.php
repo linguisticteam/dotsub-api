@@ -4,7 +4,11 @@ use Lti\DotsubAPI\Auth\Auth_Simple;
 use Lti\DotsubAPI\Http\Http_Request;
 use Lti\DotsubAPI\Service\Service_Exception;
 
-class Service
+/**
+ * Class Service
+ * @package Lti\DotsubAPI
+ */
+abstract class Service
 {
     protected static $SERVICE_URL = "https://dotSUB.com/api/media";
     protected static $MEDIA_EXT_ID = "https://dotSUB.com/api/user/username/media";
@@ -24,7 +28,7 @@ class Service
      * Constructor for Service
      *
      * @param Client $client
-     * @param string $usingExtId
+     * @param boolean $usingExtId
      * @throws Service_Exception
      */
     public function __construct(Client $client, $usingExtId = false)

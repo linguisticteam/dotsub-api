@@ -47,7 +47,7 @@ class Service_Exception_Server_Error extends Service_Exception
     public function __construct($message, $dSMessage, $code)
     {
         parent::__construct($message, $dSMessage, $code);
-        $this->message = "Server errror.";
+        $this->message = "Server error.";
     }
 }
 

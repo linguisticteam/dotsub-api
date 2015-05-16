@@ -1,4 +1,4 @@
-## dotSUB API Client Library for PHP [![Build Status](https://travis-ci.org/linguisticteam/dotsub-api.svg?branch=master)](https://travis-ci.org/linguisticteam/dotsub-api) [![Code Climate](https://codeclimate.com/github/linguisticteam/dotsub-api/badges/gpa.svg)](https://codeclimate.com/github/linguisticteam/dotsub-api) [![Coverage Status](https://coveralls.io/repos/linguisticteam/dotsub-api/badge.svg)](https://coveralls.io/r/linguisticteam/dotsub-api)###
+## dotSUB API Client Library for PHP [![Build Status](https://travis-ci.org/linguisticteam/dotsub-api.svg?branch=master)](https://travis-ci.org/linguisticteam/dotsub-api) [![Code Climate](https://codeclimate.com/github/linguisticteam/dotsub-api/badges/gpa.svg)](https://codeclimate.com/github/linguisticteam/dotsub-api) ##
 
 ### Description ###
 Manipulating dotSUB videos using its API with PHP.
