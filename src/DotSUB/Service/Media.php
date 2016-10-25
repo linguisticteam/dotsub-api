@@ -163,16 +163,16 @@ class Service_Media extends Service
      *
      *
      * @param string $query The query you wish to perform
-     * @param int $limit Number of results per page
-     * @param int $start The first result to return
+     * @param int $pagesize Number of results per page
+     * @param int $offset The first result to return
      * @return Http_Request
      */
-    public function mediaQuery($query, $limit = 20, $start = 0)
+    public function mediaQuery($query, $pagesize = 20, $offset = 0)
     {
 
         $this->httpRequest->setQueryParam("q", $query);
-        $this->httpRequest->setQueryParam("limit", $limit);
-        $this->httpRequest->setQueryParam("start", $start);
+        $this->httpRequest->setQueryParam("pagesize", $pagesize);
+        $this->httpRequest->setQueryParam("offset", $offset);
 
         return $this->httpRequest;
 
