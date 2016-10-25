@@ -28,12 +28,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Lti\\DotsubAPI\\": "src/"
+      "Lti\\DotsubAPI\\": "src/DotSUB"
     }
   },
   "scripts": {
     "post-install-cmd": [
-      "composer dump-autoload --optimize"
+      "composer dump-autoload --classmap-authoritative"
     ]
   }
 }
